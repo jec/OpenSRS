@@ -1,4 +1,4 @@
-# OpenSRS
+# OpenSRS [![Build Status](https://travis-ci.org/jec/OpenSRS.svg?branch=master)](https://travis-ci.org/jec/OpenSRS)
 
 A Scala library for accessing the OpenSRS API
 
