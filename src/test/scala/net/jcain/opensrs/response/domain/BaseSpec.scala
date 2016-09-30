@@ -16,33 +16,35 @@ class BaseSpec extends WordSpec with Matchers {
 
   "BaseSpec" when {
 
-    "given DOMAIN/REPLY XML" should {
-      "return Some(Base)" in {
-        val xml = {
-          <OPS_envelope>
-            <header>
-              <version>0.9</version>
-            </header>
-            <body>
-              <data_block>
-                <dt_assoc>
-                  <item key="protocol">XCP</item>
-                  <item key="object">DOMAIN</item>
-                  <item key="response_text">Domain taken</item>
-                  <item key="action">REPLY</item>
-                  <item key="attributes">
-                    <dt_assoc>
-                      <item key="status">taken</item>
-                    </dt_assoc>
-                  </item>
-                  <item key="response_code">211</item>
-                  <item key="is_success">1</item>
-                </dt_assoc>
-              </data_block>
-            </body>
-          </OPS_envelope>
+    "create()" when {
+      "given DOMAIN/REPLY XML" should {
+        "return Some(Base)" in {
+          val xml = {
+            <OPS_envelope>
+              <header>
+                <version>0.9</version>
+              </header>
+              <body>
+                <data_block>
+                  <dt_assoc>
+                    <item key="protocol">XCP</item>
+                    <item key="object">DOMAIN</item>
+                    <item key="response_text">Domain taken</item>
+                    <item key="action">REPLY</item>
+                    <item key="attributes">
+                      <dt_assoc>
+                        <item key="status">taken</item>
+                      </dt_assoc>
+                    </item>
+                    <item key="response_code">211</item>
+                    <item key="is_success">1</item>
+                  </dt_assoc>
+                </data_block>
+              </body>
+            </OPS_envelope>
+          }
+          Base.create(xml) shouldBe Some(Base("Domain taken"))
         }
-        Base.create(xml) shouldBe Some(Base("Domain taken"))
       }
     }
 
