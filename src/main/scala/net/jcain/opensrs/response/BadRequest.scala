@@ -16,12 +16,16 @@ object BadRequest {
 
   def create(elem: Elem): Option[BadRequest] = {
     val items = elem \ "body" \ "data_block" \ "dt_assoc" \ "item"
-    val code = for { item <- items if (item \ "@key").text == "response_code" } yield item.text
-    if (code.head == "404") {
-      val error = for { item <- items if (item \ "@key").text == "response_text" } yield item.text
-      Some(BadRequest(error.head))
+    if (items.isEmpty)
+      None
+    else {
+      val code = for {item <- items if (item \ "@key").text == "response_code"} yield item.text
+      if (code.head == "404") {
+        val error = for {item <- items if (item \ "@key").text == "response_text"} yield item.text
+        Some(BadRequest(error.head))
+      }
+      else None
     }
-    else None
   }
 
 }

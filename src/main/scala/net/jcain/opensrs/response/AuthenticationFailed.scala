@@ -16,12 +16,16 @@ object AuthenticationFailed {
 
   def create(elem: Elem): Option[AuthenticationFailed] = {
     val items = elem \ "body" \ "data_block" \ "dt_assoc" \ "item"
-    val code = for { item <- items if (item \ "@key").text == "response_code" } yield item.text
-    if (code.head == "400" || code.head == "401") {
-      val error = for { item <- items if (item \ "@key").text == "response_text" } yield item.text
-      Some(AuthenticationFailed(error.head))
+    if (items.isEmpty)
+      None
+    else {
+      val code = for {item <- items if (item \ "@key").text == "response_code"} yield item.text
+      if (code.head == "400" || code.head == "401") {
+        val error = for {item <- items if (item \ "@key").text == "response_text"} yield item.text
+        Some(AuthenticationFailed(error.head))
+      }
+      else None
     }
-    else None
   }
 
 }
